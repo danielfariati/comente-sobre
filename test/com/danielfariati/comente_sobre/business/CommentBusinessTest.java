@@ -16,6 +16,7 @@ import br.com.caelum.vraptor.util.test.JSR303MockValidator;
 import br.com.caelum.vraptor.validator.ValidationException;
 import br.com.caelum.vraptor.validator.ValidationMessage;
 
+import com.danielfariati.comente_sobre.controller.CommentController;
 import com.danielfariati.comente_sobre.model.Comment;
 import com.danielfariati.comente_sobre.repository.CommentRepository;
 
@@ -28,6 +29,7 @@ public class CommentBusinessTest {
 
 	@Before
 	public void setup() throws SQLException {
+		manager = Mockito.mock(EntityManager.class);
 		validator = Mockito.spy(new JSR303MockValidator());
 
 		repository = new CommentBusiness(manager, validator);
@@ -48,6 +50,8 @@ public class CommentBusinessTest {
 			assertEquals("deveria ter lançado apenas 1 erro", 1, e.getErrors().size());
 			assertEquals("mensagens de erro deveriam ser iguais", expected.getMessage(), e.getErrors().get(0).getMessage());
 			assertEquals("categorias de erro deveriam ser iguais", expected.getCategory(), e.getErrors().get(0).getCategory());
+
+			Mockito.verify(validator).onErrorForwardTo(CommentController.class);
 		}
 	}
 
@@ -66,13 +70,15 @@ public class CommentBusinessTest {
 			assertEquals("deveria ter lançado apenas 1 erro", 1, e.getErrors().size());
 			assertEquals("mensagens de erro deveriam ser iguais", expected.getMessage(), e.getErrors().get(0).getMessage());
 			assertEquals("categorias de erro deveriam ser iguais", expected.getCategory(), e.getErrors().get(0).getCategory());
+
+			Mockito.verify(validator).onErrorForwardTo(CommentController.class);
 		}
 	}
 
 	@Test
 	public void shouldThrowExceptionIfMessageNull() {
 		Comment comment = new Comment();
-		comment.setEmail("email");
+		comment.setEmail("email@email.com");
 		comment.setMessage(null);
 
 		try {
@@ -84,13 +90,15 @@ public class CommentBusinessTest {
 			assertEquals("deveria ter lançado apenas 1 erro", 1, e.getErrors().size());
 			assertEquals("mensagens de erro deveriam ser iguais", expected.getMessage(), e.getErrors().get(0).getMessage());
 			assertEquals("categorias de erro deveriam ser iguais", expected.getCategory(), e.getErrors().get(0).getCategory());
+
+			Mockito.verify(validator).onErrorForwardTo(CommentController.class);
 		}
 	}
 
 	@Test
 	public void shouldThrowExceptionIfMessageEmpty() {
 		Comment comment = new Comment();
-		comment.setEmail("email");
+		comment.setEmail("email@email.com");
 		comment.setMessage("");
 
 		try {
@@ -102,7 +110,20 @@ public class CommentBusinessTest {
 			assertEquals("deveria ter lançado apenas 1 erro", 1, e.getErrors().size());
 			assertEquals("mensagens de erro deveriam ser iguais", expected.getMessage(), e.getErrors().get(0).getMessage());
 			assertEquals("categorias de erro deveriam ser iguais", expected.getCategory(), e.getErrors().get(0).getCategory());
+
+			Mockito.verify(validator).onErrorForwardTo(CommentController.class);
 		}
+	}
+
+	@Test
+	public void shouldMergeIfNoValidationErrors() {
+		Comment comment = new Comment();
+		comment.setEmail("email@email.com");
+		comment.setMessage("message");
+
+		repository.save(comment);
+
+		Mockito.verify(manager).merge(comment);
 	}
 
 }

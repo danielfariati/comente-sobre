@@ -30,7 +30,6 @@ public class CommentBusiness implements CommentRepository {
 	public void save(Comment comment) {
 		validateComment(comment);
 
-		// TODO validacoes de dados
 		manager.merge(comment);
 	}
 
