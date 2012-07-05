@@ -19,11 +19,11 @@
 			<div id="comment">
 				<div id="email">
 					<label for="email-input">E-mail</label>
-					<input id="email-input" type="email" name="comment.email" required="required"/>
+					<input id="email-input" type="email" name="comment.email" required="required" value="${comment.email }"/>
 				</div>
 				<div id="message">
 					<label for="message-area">Mensagem</label>
-					<textarea id="message-area" name="comment.message" required="required" rows="5" cols="30" style="resize: none;"></textarea>
+					<textarea id="message-area" name="comment.message" required="required" rows="5" cols="30" value="${comment.message}" style="resize: none;"></textarea>
 				</div>
 			</div>
 			<div id="submit"><input type="submit" value="Enviar" /></div>
