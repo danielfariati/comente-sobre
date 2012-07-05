@@ -5,9 +5,12 @@
 		<title>Comente Sobre</title>
 	</head>
 	<body>
+		<div id="subject">
+			<label for="subject-input">Assunto que deseja pesquisar</label>
+			<input id="subject-input" type="text" name="subject.name"/>
+		</div>
 		<div>
-			<label for="subject">Assunto que deseja pesquisar</label>
-			<input id="subject" type="text" />
+			<input type="button" value="Enviar" onclick="searchSubject();"></input>
 		</div>
 	</body>
 </html>
