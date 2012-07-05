@@ -1,23 +1,32 @@
 <!DOCTYPE html>
+
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<title>Comente Sobre</title>
 	</head>
 	<body>
-		<form id="formulario" action="http://www.google.com" method="get">
-			<div id="assunto">${subject}</div>
-			<div id="comentario">
+		<c:forEach var="error" items="${errors}">
+			${error.message}<br />
+		</c:forEach>
+
+		<form action="${pageContext.request.contextPath}/${subject.name}/save" method="post">
+			<div id="subject">
+				${subject.name}
+			</div>
+			<div id="comment">
 				<div id="email">
 					<label for="email-input">E-mail</label>
-					<input id="email-input" type="email" required="required"/>
+					<input id="email-input" type="email" name="comment.email" required="required"/>
 				</div>
-				<div id="mensagem">
-					<label for="mensagem-area">Mensagem</label>
-					<textarea id="mensagem-area" required="required" rows="5" cols="30" style="resize: none;"></textarea>
+				<div id="message">
+					<label for="message-area">Mensagem</label>
+					<textarea id="message-area" name="comment.message" required="required" rows="5" cols="30" style="resize: none;"></textarea>
 				</div>
 			</div>
-			<div id="enviar"><input type="submit" value="Enviar" /></div>
+			<div id="submit"><input type="submit" value="Enviar" /></div>
 		</form>
 	</body>
 </html>
