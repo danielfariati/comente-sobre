@@ -13,4 +13,11 @@
 			<input type="button" value="Enviar" onclick="searchSubject();"></input>
 		</div>
 	</body>
+
+	<script type="text/javascript">
+		function searchSubject() {
+			var subject = document.getElementById('subject-input').value;
+			window.location = '${pageContext.request.contextPath}/' + subject;
+		};
+	</script>
 </html>
