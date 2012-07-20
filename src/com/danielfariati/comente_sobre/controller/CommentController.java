@@ -1,7 +1,5 @@
 package com.danielfariati.comente_sobre.controller;
 
-import java.util.Collection;
-
 import br.com.caelum.vraptor.Get;
 import br.com.caelum.vraptor.Path;
 import br.com.caelum.vraptor.Post;
@@ -9,41 +7,36 @@ import br.com.caelum.vraptor.Resource;
 import br.com.caelum.vraptor.Result;
 
 import com.danielfariati.comente_sobre.model.Comment;
-import com.danielfariati.comente_sobre.model.Subject;
+import com.danielfariati.comente_sobre.model.Topic;
 import com.danielfariati.comente_sobre.repository.CommentRepository;
+import com.danielfariati.comente_sobre.repository.TopicRepository;
 
 @Resource
 public class CommentController {
 
 	private final Result result;
 	private final CommentRepository repository;
+	private final TopicRepository topicRepository;
 
-	public CommentController(Result result, CommentRepository repository) {
+	public CommentController(Result result, CommentRepository repository, TopicRepository topicRepository) {
 		this.result = result;
 		this.repository = repository;
+		this.topicRepository = topicRepository;
 	}
 
-	@Path("/{comment.subject.name}")
-	@Get
-	public void comment(Comment comment) {
-		result.include("subject", comment.getSubject());
+	@Get({"/comment/{topic.id}", "/comment/new/{topic.id}"})
+	public void add(Topic topic) {
+		topic = topicRepository.loadById(topic.getId());
+
+		result.include("topic", topic);
 	}
 
-	@Path("/{comment.subject.name}/save")
 	@Post
+	@Path("/comment")
 	public void save(Comment comment) {
 		repository.save(comment);
 
-		result.forwardTo(this).list(comment.getSubject());
-	}
-
-	@Path("/{subject.name}/list")
-	@Get
-	public void list(Subject subject) {
-		Collection<Comment> commentList = repository.loadBySubject(subject);
-		result
-		.include("subject", subject)
-		.include("commentList", commentList);
+		result.forwardTo(TopicController.class).search(comment.getTopic());
 	}
 
 }
