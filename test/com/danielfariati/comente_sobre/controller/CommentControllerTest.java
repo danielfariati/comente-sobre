@@ -2,9 +2,6 @@ package com.danielfariati.comente_sobre.controller;
 
 import static org.mockito.Mockito.verify;
 
-import java.util.ArrayList;
-import java.util.Collection;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -16,8 +13,9 @@ import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.util.test.MockResult;
 
 import com.danielfariati.comente_sobre.model.Comment;
-import com.danielfariati.comente_sobre.model.Subject;
+import com.danielfariati.comente_sobre.model.Topic;
 import com.danielfariati.comente_sobre.repository.CommentRepository;
+import com.danielfariati.comente_sobre.repository.TopicRepository;
 
 public class CommentControllerTest {
 
@@ -25,21 +23,24 @@ public class CommentControllerTest {
 
 	@Spy private Result result = new MockResult();
 
-	@Mock private  CommentRepository repository;
+	@Mock private CommentRepository repository;
+	@Mock private TopicRepository topicRepository;
 
 	@Before
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
-		controller = new CommentController(result, repository);
+		controller = new CommentController(result, repository, topicRepository);
 	}
 
 	@Test
-	public void shouldIncludeSubjectInResult() {
-		Comment comment = Mockito.mock(Comment.class);
+	public void shouldIncludeTopicInResult() {
+		Topic topic = Mockito.mock(Topic.class);
 
-		controller.comment(comment);
+		Mockito.when(topicRepository.loadById(topic.getId())).thenReturn(topic);
 
-		verify(result).include("subject", comment.getSubject());
+		controller.add(topic);
+
+		verify(result).include("topic", topic);
 	}
 
 	@Test
@@ -52,43 +53,12 @@ public class CommentControllerTest {
 	}
 
 	@Test
-	public void shouldCallMethodListBySubject() {
-		Subject subject = Mockito.mock(Subject.class);
-
-		controller.list(subject);
-
-		verify(repository).loadBySubject(subject);
-	}
-
-	@Test
-	public void shouldIncludeSubjectOnResultWhenListingComments() {
-		Subject subject = Mockito.mock(Subject.class);
-
-		controller.list(subject);
-
-		verify(result).include("subject", subject);
-	}
-
-	@Test
-	public void shouldIncludeCommentListOnResultWhenListingComments() {
-		Subject subject = Mockito.mock(Subject.class);
-
-		Collection<Comment> commentList = new ArrayList<Comment>();
-
-		Mockito.when(repository.loadBySubject(subject)).thenReturn(commentList);
-
-		controller.list(subject);
-
-		verify(result).include("commentList", commentList);
-	}
-
-	@Test
-	public void shouldForwardAfterSave() {
+	public void shouldForwardToTopicListAfterSave() {
 		Comment comment = Mockito.mock(Comment.class);
 
 		controller.save(comment);
 
-		verify(result).forwardTo(CommentController.class);
+		verify(result).forwardTo(TopicController.class);
 	}
 
 }
