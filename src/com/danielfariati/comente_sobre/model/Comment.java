@@ -1,39 +1,35 @@
 package com.danielfariati.comente_sobre.model;
 
-import java.io.Serializable;
-
-import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
+
+import com.danielfariati.comente_sobre.model.common.GenericEntity;
+
 @Entity
-public class Comment implements Serializable {
-	
+public class Comment extends GenericEntity {
+
 	private static final long serialVersionUID = -951123461336762520L;
 
-	@Id
-	@GeneratedValue
-	private Long id;
-
+	@Email
 	@NotNull
+	@NotEmpty
+	@Column
 	private String email;
 
 	@NotNull
+	@NotEmpty
+	@Column
 	private String message;
 
-	@OneToOne(cascade=CascadeType.ALL)
-	private Subject subject;
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
+	@ManyToOne
+	@JoinColumn(name = "topic")
+	private Topic topic;
 
 	public String getEmail() {
 		return email;
@@ -51,12 +47,12 @@ public class Comment implements Serializable {
 		this.message = message;
 	}
 
-	public Subject getSubject() {
-		return subject;
+	public Topic getTopic() {
+		return topic;
 	}
 
-	public void setSubject(Subject subject) {
-		this.subject = subject;
+	public void setTopic(Topic topic) {
+		this.topic = topic;
 	}
 
 }
