@@ -2,9 +2,6 @@ package com.danielfariati.comente_sobre.controller;
 
 import static org.mockito.Mockito.verify;
 
-import java.util.ArrayList;
-import java.util.Collection;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -12,11 +9,11 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.Spy;
 
-import com.danielfariati.comente_sobre.model.Topic;
-import com.danielfariati.comente_sobre.repository.TopicRepository;
-
 import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.util.test.MockResult;
+
+import com.danielfariati.comente_sobre.model.Topic;
+import com.danielfariati.comente_sobre.repository.TopicRepository;
 
 public class TopicControllerTest {
 
@@ -30,18 +27,6 @@ public class TopicControllerTest {
 	public void init() {
 		MockitoAnnotations.initMocks(this);
 		controller = new TopicController(result, repository);
-	}
-
-	@Test
-	public void shouldListExistingTopics() {
-		Collection<Topic> topicList = new ArrayList<Topic>();
-
-		Mockito.when(repository.loadAll()).thenReturn(topicList);
-
-		controller.list();
-
-		verify(repository).loadAll();
-		verify(result).include("topicList", topicList);
 	}
 
 	@Test
@@ -64,6 +49,15 @@ public class TopicControllerTest {
 		controller.add(topic);
 
 		verify(result).include("topic", topic);
+	}
+
+	@Test
+	public void shouldIncludePrefixURLOnAddPage() {
+		String prefixURL = Topic.prefixURL;
+
+		controller.add(null);
+
+		verify(result).include("prefixURL", prefixURL);
 	}
 
 	@Test

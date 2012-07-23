@@ -36,9 +36,12 @@ public class CommentControllerTest {
 	public void shouldIncludeTopicInResult() {
 		Topic topic = Mockito.mock(Topic.class);
 
+		Comment comment = new Comment();
+		comment.setTopic(topic);
+
 		Mockito.when(topicRepository.loadById(topic.getId())).thenReturn(topic);
 
-		controller.add(topic);
+		controller.add(comment);
 
 		verify(result).include("topic", topic);
 	}

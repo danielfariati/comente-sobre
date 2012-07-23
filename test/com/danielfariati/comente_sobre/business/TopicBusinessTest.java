@@ -242,4 +242,14 @@ public class TopicBusinessTest {
 		assertEquals("should have 2 topics", 2, topicList.size());
 	}
 
+	@Test
+	public void shouldRemoveAllCommentsOfTheTopic() {
+		Topic expected = repository.loadById(1l);
+		expected.setCommentList(null);
+
+		Topic actual = repository.save(expected);
+
+		assertNull(actual.getCommentList());
+	}
+
 }

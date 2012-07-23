@@ -106,6 +106,30 @@ public class CommentBusinessTest {
 	}
 
 	@Test
+	public void shouldThrowExceptionIfEmailInvalid() {
+		Topic topic = new Topic();
+		topic.setId(1l);
+
+		Comment comment = new Comment();
+		comment.setEmail("mail");
+		comment.setMessage("mensagem");
+		comment.setTopic(topic);
+
+		try {
+			repository.save(comment);
+			fail("exception expected but not throwed");
+		} catch (ValidationException e) {
+			ValidationMessage expected = new ValidationMessage("Por favor, informe um e-mail válido.", "comment.email");
+
+			assertEquals("should have throw only 1 error", 1, e.getErrors().size());
+			assertEquals("error messages should be equals", expected.getMessage(), e.getErrors().get(0).getMessage());
+			assertEquals("error categories should be equals", expected.getCategory(), e.getErrors().get(0).getCategory());
+
+			verify(validator).onErrorForwardTo(CommentController.class);
+		}
+	}
+
+	@Test
 	public void shouldThrowExceptionIfMessageNull() {
 		Topic topic = new Topic();
 		topic.setId(1l);
