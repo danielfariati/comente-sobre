@@ -1,50 +1,21 @@
-<!DOCTYPE html>
+<form id="form" action="${pageContext.request.contextPath}/comment" method="post">
+	<input type="hidden" name="comment.topic.id" value="${comment.topic.id}" />
 
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-
-<html>
-	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-		<title>Comente Sobre</title>
-	</head>
-	<body>
-		<c:forEach var="error" items="${errors}">
-			${error.message}<br />
-		</c:forEach>
-
-		<form id="form" action="${pageContext.request.contextPath}/comment" method="post">
-			<div id="topic">${topic.subject}</div>
-			<div id="comment">
-				<div id="email">
-					<label for="email-input">E-mail</label>
-					<input id="email-input" type="email" name="comment.email" required="required" value="${comment.email }"/>
-				</div>
-				<div id="message">
-					<label for="message-area">Mensagem</label>
-					<textarea id="message-area" name="comment.message" required="required" rows="5" cols="30" value="${comment.message}" style="resize: none;"></textarea>
-				</div>
-			</div>
-			<div id="submit"><input type="submit" value="Enviar" onclick="checkFields()" /></div>
-		</form>
-	</body>
-
-	<script type="text/javascript">
-		function checkFields() {
-			var email = document.getElementById('email-input'),
-				message = document.getElementById('message-area');
-
-			if (email.validity.typeMismatch || email.validity.valueMissing){
-				email.setCustomValidity("Por favor, informe um e-mail válido!");
-			} else {
-				email.setCustomValidity("");
-			}
-
-			if (message.validity.valueMissing){
-				message.setCustomValidity("Por favor, informe uma mensagem!");
-			} else {
-				message.setCustomValidity("");
-			}
-		};
-	</script>
-
-</html>
+	<div id="topic">
+		<h1>${comment.topic.subject}</h1>
+	</div>
+	<div id="comment-header">
+		<h2>Novo Coment&aacute;rio</h2>
+	</div>
+	<div id="comment">
+		<div id="email">
+			<label for="email-input">E-mail</label>
+			<input id="email-input" type="text" name="comment.email" value="${comment.email }"/>
+		</div>
+		<div id="message">
+			<label for="message-area">Mensagem</label>
+			<textarea id="message-area" name="comment.message" rows="5" cols="30" value="${comment.message}"></textarea>
+		</div>
+	</div>
+	<div id="submit"><input type="submit" value="Enviar" class="btn btn-primary"/></div>
+</form>
