@@ -1,0 +1,29 @@
+body {
+	padding: 10px;
+}
+
+label {
+	font-weight: bold !important;
+}
+
+.input-wrapper {
+	margin-bottom: 20px;
+}
+
+.alert {
+	text-align: center;
+	font-size: 14px;
+}
+
+.title {
+	font-weight: bold;
+}
+
+#comment-list-header {
+	font-size: 22px;
+	margin-top: 20px;
+}
+
+#comment-list {
+	margin-top: 20px;
+}
