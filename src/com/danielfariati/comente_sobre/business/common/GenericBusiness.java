@@ -39,7 +39,8 @@ public class GenericBusiness<T extends GenericEntity> implements GenericReposito
 
 	public T loadById(Long id) {
 		try {
-			return manager.find(clazz, id);
+			T entity = manager.find(clazz, id);
+			return entity;
 		} catch(EntityNotFoundException e) {
 			return null;
 		}
