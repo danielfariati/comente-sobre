@@ -1,7 +1,6 @@
 package com.danielfariati.comente_sobre.controller;
 
 import br.com.caelum.vraptor.Get;
-import br.com.caelum.vraptor.Path;
 import br.com.caelum.vraptor.Post;
 import br.com.caelum.vraptor.Resource;
 import br.com.caelum.vraptor.Result;
@@ -24,19 +23,22 @@ public class CommentController {
 		this.topicRepository = topicRepository;
 	}
 
-	@Get({"/comment/{topic.id}", "/comment/new/{topic.id}"})
-	public void add(Topic topic) {
-		topic = topicRepository.loadById(topic.getId());
+	@Get("/comment/{comment.topic.id}")
+	public void add(Comment comment) {
+		Topic topic = topicRepository.loadById(comment.getTopic().getId());
+		comment.setTopic(topic);
 
-		result.include("topic", topic);
+		result.include("comment", comment);
 	}
 
-	@Post
-	@Path("/comment")
+	@Post("/comment")
 	public void save(Comment comment) {
+		Topic topic = topicRepository.loadById(comment.getTopic().getId());
+		comment.setTopic(topic);
+
 		repository.save(comment);
 
-		result.forwardTo(TopicController.class).search(comment.getTopic());
+		result.redirectTo(TopicController.class).search(comment.getTopic());
 	}
 
 }

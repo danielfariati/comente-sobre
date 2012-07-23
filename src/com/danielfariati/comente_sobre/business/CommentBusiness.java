@@ -14,6 +14,7 @@ import com.danielfariati.comente_sobre.controller.CommentController;
 import com.danielfariati.comente_sobre.model.Comment;
 import com.danielfariati.comente_sobre.model.Topic;
 import com.danielfariati.comente_sobre.repository.CommentRepository;
+import com.danielfariati.comente_sobre.utils.Utils;
 
 @Component
 public class CommentBusiness extends GenericBusiness<Comment> implements CommentRepository {
@@ -42,6 +43,8 @@ public class CommentBusiness extends GenericBusiness<Comment> implements Comment
 	private void validateComment(Comment comment) {
 		if (comment.getEmail() == null || comment.getEmail().isEmpty()) {
 			validator.add(new ValidationMessage("O campo e-mail deve ser preenchido!", "comment.email"));
+		} else if (!Utils.validateEmail(comment.getEmail())) {
+			validator.add(new ValidationMessage("Por favor, informe um e-mail válido.", "comment.email"));
 		}
 
 		if (comment.getMessage() == null || comment.getMessage().isEmpty()) {
@@ -52,7 +55,7 @@ public class CommentBusiness extends GenericBusiness<Comment> implements Comment
 			validator.add(new ValidationMessage("O campo tópico deve ser preenchido!", "comment.topic.id"));
 		}
 
-		validator.onErrorForwardTo(CommentController.class).add(comment.getTopic());
+		validator.onErrorForwardTo(CommentController.class).add(comment);
 	}
 
 }
