@@ -2,12 +2,12 @@ package com.danielfariati.comente_sobre.controller;
 
 import java.util.Collection;
 
-import com.danielfariati.comente_sobre.model.Topic;
-import com.danielfariati.comente_sobre.repository.TopicRepository;
-
 import br.com.caelum.vraptor.Path;
 import br.com.caelum.vraptor.Resource;
 import br.com.caelum.vraptor.Result;
+
+import com.danielfariati.comente_sobre.model.Topic;
+import com.danielfariati.comente_sobre.repository.TopicRepository;
 
 @Resource
 public class IndexController {
