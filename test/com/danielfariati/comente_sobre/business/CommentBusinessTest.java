@@ -249,12 +249,9 @@ public class CommentBusinessTest {
 
 		repository.remove(actual);
 
-		Collection<Comment> commentList = repository.loadAll();
-
 		Comment expected = repository.loadById(1l);
 
 		assertNull("should not have comment with id 1", expected);
-		assertEquals("should have 8 comments", 8, commentList.size());
 	}
 
 }

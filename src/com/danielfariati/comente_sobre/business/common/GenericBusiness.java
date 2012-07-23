@@ -4,6 +4,7 @@ import java.lang.reflect.ParameterizedType;
 import java.util.Collection;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityNotFoundException;
 import javax.persistence.Query;
 
 import br.com.caelum.vraptor.Validator;
@@ -37,7 +38,11 @@ public class GenericBusiness<T extends GenericEntity> implements GenericReposito
 	}
 
 	public T loadById(Long id) {
-		return manager.find(clazz, id);
+		try {
+			return manager.find(clazz, id);
+		} catch(EntityNotFoundException e) {
+			return null;
+		}
 	}
 
 	public void remove(T entity) {
