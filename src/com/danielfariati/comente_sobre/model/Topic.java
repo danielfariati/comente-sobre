@@ -7,14 +7,16 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.NotNull;
 
 import com.danielfariati.comente_sobre.model.common.GenericEntity;
-import com.sun.istack.internal.NotNull;
 
 @Entity
 public class Topic extends GenericEntity {
 
 	private static final long serialVersionUID = 178312327352747377L;
+
+	public static final String prefixURL = "http://www.comentesobre.com";
 
 	@NotNull
 	@Column(unique = true)

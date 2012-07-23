@@ -5,6 +5,7 @@ import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
 import br.com.caelum.vraptor.Validator;
+import br.com.caelum.vraptor.ioc.Component;
 import br.com.caelum.vraptor.validator.ValidationMessage;
 
 import com.danielfariati.comente_sobre.business.common.GenericBusiness;
@@ -12,6 +13,7 @@ import com.danielfariati.comente_sobre.controller.TopicController;
 import com.danielfariati.comente_sobre.model.Topic;
 import com.danielfariati.comente_sobre.repository.TopicRepository;
 
+@Component
 public class TopicBusiness extends GenericBusiness<Topic> implements TopicRepository {
 
 	public TopicBusiness(EntityManager manager, Validator validator) {
@@ -39,13 +41,13 @@ public class TopicBusiness extends GenericBusiness<Topic> implements TopicReposi
 	private void validateTopic(Topic topic) {
 		if (topic.getSubject() == null || topic.getSubject().isEmpty()) {
 			validator.add(new ValidationMessage("O campo assunto deve ser preenchido!", "topic.subject"));
-		} else {
+		} else if (topic.getId() == null) {
 			checkSubjectUniqueness(topic.getSubject());			
 		}
 
 		if (topic.getSubjectURL() == null || topic.getSubjectURL().isEmpty()) {
 			validator.add(new ValidationMessage("O campo URL deve ser preenchido!", "topic.subjectURL"));
-		} else {
+		} else if (topic.getId() == null) {
 			checkSubjectURLUniqueness(topic.getSubjectURL());			
 		}
 

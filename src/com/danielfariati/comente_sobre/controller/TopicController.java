@@ -1,11 +1,9 @@
 package com.danielfariati.comente_sobre.controller;
 
-import java.util.Collection;
-
-import javax.annotation.Resource;
 
 import br.com.caelum.vraptor.Get;
 import br.com.caelum.vraptor.Post;
+import br.com.caelum.vraptor.Resource;
 import br.com.caelum.vraptor.Result;
 
 import com.danielfariati.comente_sobre.model.Topic;
@@ -22,15 +20,7 @@ public class TopicController {
 		this.repository = repository;
 	}
 
-	// TODO verify if needed (index do the same)
-	@Get("/topic")
-	public void list() {
-		Collection<Topic> topicList = repository.loadAll();
-
-		result.include("topicList", topicList);
-	}
-
-	@Get("/topic/{topic.subjectURL}")
+	@Get("/{topic.subjectURL}")
 	public void search(Topic topic) {
 		topic = repository.loadBySubjectURL(topic.getSubjectURL());
 
@@ -39,7 +29,9 @@ public class TopicController {
 
 	@Get("/topic/new")
 	public void add(Topic topic) {
-		result.include("topic", topic);
+		result
+		.include("topic", topic)
+		.include("prefixURL", Topic.prefixURL);
 	}
 
 	@Post({"/topic", "/topic/new"})
