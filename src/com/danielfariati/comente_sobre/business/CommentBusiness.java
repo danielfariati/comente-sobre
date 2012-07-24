@@ -55,7 +55,7 @@ public class CommentBusiness extends GenericBusiness<Comment> implements Comment
 			validator.add(new ValidationMessage("O campo tópico deve ser preenchido!", "comment.topic.id"));
 		}
 
-		validator.onErrorForwardTo(CommentController.class).add(comment);
+		validator.onErrorForwardTo(CommentController.class).add(comment, comment.getTopic());
 	}
 
 }

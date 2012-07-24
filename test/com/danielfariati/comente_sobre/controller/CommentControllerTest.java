@@ -1,5 +1,6 @@
 package com.danielfariati.comente_sobre.controller;
 
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 import org.junit.Before;
@@ -24,6 +25,7 @@ public class CommentControllerTest {
 	@Spy private Result result = new MockResult();
 
 	@Mock private CommentRepository repository;
+
 	@Mock private TopicRepository topicRepository;
 
 	@Before
@@ -34,31 +36,27 @@ public class CommentControllerTest {
 
 	@Test
 	public void shouldIncludeCommentInResult() {
+		Comment comment = Mockito.mock(Comment.class);
 		Topic topic = Mockito.mock(Topic.class);
 
-		Comment comment = new Comment();
-		comment.setTopic(topic);
+		controller.add(comment, topic);
 
-		Mockito.when(topicRepository.loadById(topic.getId())).thenReturn(topic);
-
-		controller.add(comment);
-
-		verify(topicRepository).loadById(topic.getId());
+		verify(topicRepository, times(1)).loadById(topic.getId());
 		verify(result).include("comment", comment);
 	}
 
 	@Test
 	public void shouldCallMethodSave() {
-		Comment comment = new Comment();
+		Comment comment = Mockito.mock(Comment.class);
 
 		controller.save(comment);
 
-		verify(repository).save(comment);
+		verify(repository, times(1)).save(comment);
 	}
 
 	@Test
 	public void shouldRedirectToTopicListAfterSave() {
-		Comment comment = new Comment();
+		Comment comment = Mockito.mock(Comment.class);
 
 		controller.save(comment);
 
