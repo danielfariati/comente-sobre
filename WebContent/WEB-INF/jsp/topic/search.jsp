@@ -62,7 +62,10 @@
 	};
 
 	$(function() {
-		$('#new-comment-wrapper').hide();
+		if (!'${errors}') {
+			$('#new-comment-wrapper').hide();
+		}
+
 		$('#add-comment-btn').focus();
 	});
 </script>
