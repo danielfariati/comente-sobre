@@ -35,3 +35,18 @@ label {
 #add-topic {
 	margin-top: 20px;
 }
+
+#new-comment-wrapper {
+	border: 1px black solid;
+	background-color: #F0F0F0;
+	display: block;
+	margin-top: 20px;
+	padding-top: 10px;
+	padding-left: 10px;
+}
+
+#message-area {
+	resize: none;
+	height: 200px;
+	width: 98%;
+}
