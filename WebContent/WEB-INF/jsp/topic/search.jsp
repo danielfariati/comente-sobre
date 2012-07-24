@@ -8,7 +8,7 @@
 			<div id="comments">
 				<div id="comment-list-header">
 					Coment&aacute;rios
-					<input type="button" value="Adicionar novo" onclick="newComment();" class="btn"/>
+					<input id="add-comment-btn" type="button" value="Adicionar novo" onclick="newComment();" class="btn"/>
 				</div>
 
 				<div id="comment-list">
@@ -42,4 +42,8 @@
 		var url = '${pageContext.request.contextPath}/comment/${topic.id}';
 		$(location).attr('href', url);
 	};
+
+	$(function() {
+		$('#add-comment-btn').focus();
+	});
 </script>

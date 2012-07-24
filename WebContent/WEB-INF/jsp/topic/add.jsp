@@ -22,32 +22,35 @@
 		$(location).attr('href', url);
 	};
 
-	function suggestURL(subject) {
-		var url = subject.toLowerCase();
-
+	function adjustURL(url) {
+		url = url.toLowerCase();
 		url = url.replace(new RegExp('[àáâãäå]', 'g'), 'a');
-		url = url.replace(new RegExp('[èéêë]', 'g'), 'e');
-		url = url.replace(new RegExp('[ìíîï]', 'g'), 'i');
-		url = url.replace(new RegExp('[òóôõö]', 'g'), 'o');
-		url = url.replace(new RegExp('[ùúûü]', 'g'), 'u');
-		url = url.replace(new RegExp('[ýÿ]', 'g'), 'y');
 		url = url.replace(new RegExp('æ', 'g'), 'ae');
 		url = url.replace(new RegExp('ç', 'g'), 'c');
+		url = url.replace(new RegExp('[èéêë]', 'g'), 'e');
+		url = url.replace(new RegExp('[ìíîï]', 'g'), 'i');
 		url = url.replace(new RegExp('ñ', 'g'), 'n');
+		url = url.replace(new RegExp('[òóôõö]', 'g'), 'o');
 		url = url.replace(new RegExp('œ', 'g'), 'oe');
+		url = url.replace(new RegExp('[ùúûü]', 'g'), 'u');
 		url = url.replace(new RegExp(' ', 'g'), '-');
 		url = url.replace(new RegExp('[\.+]', 'g'), '-');
-		url = url.replace(new RegExp('\\W^\-', 'g'), '');
+		url = url.replace(new RegExp('[ýÿ]', 'g'), 'y');
+		url = url.replace(new RegExp('[^0-9a-z\-]', 'g'), '');
 
-		return url;
+		$('#subject-url-input').val(url);
 	};
 
 	$(function() {
-		$('#subject-input').keyup(function() {
-			var subject = $(this).val(),
-				url = suggestURL(subject);
+		$('#subject-input').focus().keyup(function() {
+			var subject = $(this).val();
 
-			$('#subject-url-input').val(url);
+			adjustURL(subject);
+		});
+
+		$('#subject-url-input').keyup(function() {
+			var url = $(this).val();
+			adjustURL(url);
 		});
 	});
 </script>

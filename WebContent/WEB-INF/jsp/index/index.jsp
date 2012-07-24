@@ -1,9 +1,9 @@
 <div id="subject">
-	<label for="subject-select">Assunto que deseja pesquisar</label>
+	<label for="subject-select">T&oacute;pico que deseja comentar</label>
 	<select id="subject-select">
 		<option value="">--selecione--</option>
-		<c:forEach items="${topicList}" var="item">
-			<option value="${item.subjectURL}">${item.subject}</option>
+		<c:forEach items="${topicList}" var="topic">
+			<option value="${topic.subjectURL}">${topic.subject}</option>
 		</c:forEach>
 	</select>
 </div>
@@ -25,4 +25,12 @@
 		var url = '${pageContext.request.contextPath}/topic/new';
 		$(location).attr('href', url);
 	};
+
+	$(function() {
+		$('#subject-select').focus().keypress(function(evt) {
+			if (isEnter(evt)) {
+				searchTopic();
+			}
+		});
+	});
 </script>

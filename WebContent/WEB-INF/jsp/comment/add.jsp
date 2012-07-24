@@ -1,5 +1,7 @@
 <form id="form" action="${pageContext.request.contextPath}/comment" method="post">
 	<input type="hidden" name="comment.topic.id" value="${comment.topic.id}" />
+	<input type="hidden" type="text" name="comment.topic.subject" value="${comment.topic.subject}" />
+	<input type="hidden" type="text" name="comment.topic.subjectURL" value="${comment.topic.subjectURL}" />
 
 	<div id="topic">
 		<h1>${comment.topic.subject}</h1>
@@ -19,3 +21,9 @@
 	</div>
 	<div id="submit"><input type="submit" value="Enviar" class="btn btn-primary"/></div>
 </form>
+
+<script type="text/javascript">
+	$(function() {
+		$('#email-input').focus();
+	});
+</script>
