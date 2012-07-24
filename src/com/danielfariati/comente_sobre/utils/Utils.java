@@ -12,4 +12,13 @@ public class Utils {
 
 		return matcher.matches();
 	}
+
+	public static boolean validateUrl(String url) {
+		String urlRegex = "^([A-Za-z0-9-]+)$";
+		Pattern urlPattern = Pattern.compile(urlRegex);
+		Matcher matcher = urlPattern.matcher(url);
+
+	    return matcher.matches();
+	}
+
 }

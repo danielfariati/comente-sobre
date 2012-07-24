@@ -97,4 +97,58 @@ public class UtilsTest {
 		assertTrue(isValid);
 	}
 
+	@Test
+	public void shouldReturnTrueIfUrlIsValid() {
+		String url = "valid-url";
+
+		Boolean isValid = Utils.validateUrl(url);
+
+		assertTrue(isValid);
+	}
+
+	@Test
+	public void shouldReturnTrueIfUrlIsValidWithNumbers() {
+		String url = "valid-url-1";
+
+		Boolean isValid = Utils.validateUrl(url);
+
+		assertTrue(isValid);
+	}
+
+	@Test
+	public void shouldReturnFalseIfUrlHaveBlankSpace() {
+		String url = "invalid url";
+
+		Boolean isValid = Utils.validateUrl(url);
+
+		assertFalse(isValid);
+	}
+
+	@Test
+	public void shouldReturnFalseIfUrlHaveSpecialChar() {
+		String url = "invalid*url";
+
+		Boolean isValid = Utils.validateUrl(url);
+
+		assertFalse(isValid);
+	}
+
+	@Test
+	public void shouldReturnFalseIfUrlHaveUnderscore() {
+		String url = "invalid_url";
+
+		Boolean isValid = Utils.validateUrl(url);
+
+		assertFalse(isValid);
+	}
+
+	@Test
+	public void shouldReturnFalseIfUrlHaveAccent() {
+		String url = "inválid-url";
+
+		Boolean isValid = Utils.validateUrl(url);
+
+		assertFalse(isValid);
+	}
+
 }
