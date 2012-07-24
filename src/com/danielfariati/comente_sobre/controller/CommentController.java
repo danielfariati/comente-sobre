@@ -25,16 +25,22 @@ public class CommentController {
 
 	@Get("/comment/{comment.topic.id}")
 	public void add(Comment comment) {
-		Topic topic = topicRepository.loadById(comment.getTopic().getId());
-		comment.setTopic(topic);
+		// TODO maybe store topic information in the view
+		if (comment.getTopic() != null) {
+			Topic topic = topicRepository.loadById(comment.getTopic().getId());
+			comment.setTopic(topic);
+		}
 
 		result.include("comment", comment);
 	}
 
 	@Post("/comment")
 	public void save(Comment comment) {
-		Topic topic = topicRepository.loadById(comment.getTopic().getId());
-		comment.setTopic(topic);
+		// TODO maybe store topic information in the view 
+		if (comment.getTopic() != null) {
+			Topic topic = topicRepository.loadById(comment.getTopic().getId());
+			comment.setTopic(topic);
+		}
 
 		repository.save(comment);
 
