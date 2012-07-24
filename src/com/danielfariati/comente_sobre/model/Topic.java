@@ -5,7 +5,6 @@ import java.util.Collection;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
@@ -26,8 +25,7 @@ public class Topic extends GenericEntity {
 	@Column(unique = true)
 	private String subjectURL;
 
-	// TODO Verify if EAGER is needed
-	@OneToMany(mappedBy="topic", fetch = FetchType.EAGER, cascade=CascadeType.ALL)
+	@OneToMany(mappedBy="topic", cascade=CascadeType.ALL)
 	private Collection<Comment> commentList;
 
 	public String getSubject() {

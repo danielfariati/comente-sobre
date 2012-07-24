@@ -1,6 +1,8 @@
 package com.danielfariati.comente_sobre.controller;
 
 
+import java.util.Collection;
+
 import br.com.caelum.vraptor.Get;
 import br.com.caelum.vraptor.Post;
 import br.com.caelum.vraptor.Resource;
@@ -18,6 +20,13 @@ public class TopicController {
 	public TopicController(Result result, TopicRepository repository) {
 		this.result = result;
 		this.repository = repository;
+	}
+
+	@Get("/topic/list")
+	public void list() {
+		Collection<Topic> topicList = repository.loadAll();
+
+		result.include("topicList", topicList);
 	}
 
 	@Get("/{topic.subjectURL}")

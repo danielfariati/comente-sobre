@@ -1,6 +1,9 @@
 package com.danielfariati.comente_sobre.controller;
 
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+
+import java.util.Collection;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -38,7 +41,7 @@ public class TopicControllerTest {
 
 		controller.search(topic);
 
-		verify(repository).loadBySubjectURL(topic.getSubjectURL());
+		verify(repository, times(1)).loadBySubjectURL(topic.getSubjectURL());
 		verify(result).include("topic", topic);
 	}
 
@@ -66,8 +69,21 @@ public class TopicControllerTest {
 
 		controller.save(topic);
 
-		verify(repository).save(topic);
+		verify(repository, times(1)).save(topic);
 		verify(result).redirectTo(TopicController.class);
+	}
+
+	@Test
+	public void shouldIncludeTopicsOnListPage() {
+		@SuppressWarnings("unchecked")
+		Collection<Topic> topicList = Mockito.mock(Collection.class);
+
+		Mockito.when(repository.loadAll()).thenReturn(topicList);
+
+		controller.list();
+
+		verify(repository, times(1)).loadAll();
+		verify(result).include("topicList", topicList);
 	}
 
 }

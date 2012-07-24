@@ -138,6 +138,26 @@ public class TopicBusinessTest {
 	}
 
 	@Test
+	public void shouldThrowExceptionIfSubjectURLIsInvalid() {
+		Topic topic = new Topic();
+		topic.setSubject("subject");
+		topic.setSubjectURL("invalid_url");
+
+		try {
+			repository.save(topic);
+			fail("exception expected but not throwed");
+		} catch (ValidationException e) {
+			ValidationMessage expected = new ValidationMessage("A URL informada não é válida!", "topic.subjectURL");
+
+			assertEquals("should have throw only 1 error", 1, e.getErrors().size());
+			assertEquals("error messages should be equals", expected.getMessage(), e.getErrors().get(0).getMessage());
+			assertEquals("error categories should be equals", expected.getCategory(), e.getErrors().get(0).getCategory());
+
+			verify(validator).onErrorForwardTo(TopicController.class);
+		}
+	}
+
+	@Test
 	public void shouldSaveIfNoValidationErrors() {
 		Topic expected = new Topic();
 		expected.setSubject("subject");
