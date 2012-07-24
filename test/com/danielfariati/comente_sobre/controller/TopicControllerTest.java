@@ -15,6 +15,7 @@ import org.mockito.Spy;
 import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.util.test.MockResult;
 
+import com.danielfariati.comente_sobre.model.Comment;
 import com.danielfariati.comente_sobre.model.Topic;
 import com.danielfariati.comente_sobre.repository.TopicRepository;
 
@@ -39,10 +40,25 @@ public class TopicControllerTest {
 
 		Mockito.when(repository.loadBySubjectURL(topic.getSubjectURL())).thenReturn(topic);
 
-		controller.search(topic);
+		controller.search(topic, null);
 
 		verify(repository, times(1)).loadBySubjectURL(topic.getSubjectURL());
 		verify(result).include("topic", topic);
+	}
+
+	@Test
+	public void shouldIncludeSubjectOnSearchBySubjectURL() {
+		Topic topic = new Topic();
+		topic.setSubjectURL("url");
+
+		Comment comment = Mockito.mock(Comment.class);
+
+		Mockito.when(repository.loadBySubjectURL(topic.getSubjectURL())).thenReturn(topic);
+
+		controller.search(topic, comment);
+
+		verify(repository, times(1)).loadBySubjectURL(topic.getSubjectURL());
+		verify(result).include("comment", comment);
 	}
 
 	@Test

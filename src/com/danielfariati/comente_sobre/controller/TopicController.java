@@ -8,6 +8,7 @@ import br.com.caelum.vraptor.Post;
 import br.com.caelum.vraptor.Resource;
 import br.com.caelum.vraptor.Result;
 
+import com.danielfariati.comente_sobre.model.Comment;
 import com.danielfariati.comente_sobre.model.Topic;
 import com.danielfariati.comente_sobre.repository.TopicRepository;
 
@@ -30,10 +31,12 @@ public class TopicController {
 	}
 
 	@Get("/{topic.subjectURL}")
-	public void search(Topic topic) {
+	public void search(Topic topic, Comment comment) {
 		topic = repository.loadBySubjectURL(topic.getSubjectURL());
 
-		result.include("topic", topic);
+		result
+		.include("comment", comment)
+		.include("topic", topic);
 	}
 
 	@Get("/topic/new")
@@ -47,7 +50,7 @@ public class TopicController {
 	public void save(Topic topic) {
 		topic = repository.save(topic);
 
-		result.redirectTo(TopicController.class).search(topic);
+		result.redirectTo(TopicController.class).search(topic, null);
 	}
 
 }
