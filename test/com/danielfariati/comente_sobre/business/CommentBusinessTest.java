@@ -23,7 +23,7 @@ import br.com.caelum.vraptor.util.test.JSR303MockValidator;
 import br.com.caelum.vraptor.validator.ValidationException;
 import br.com.caelum.vraptor.validator.ValidationMessage;
 
-import com.danielfariati.comente_sobre.controller.CommentController;
+import com.danielfariati.comente_sobre.controller.TopicController;
 import com.danielfariati.comente_sobre.model.Comment;
 import com.danielfariati.comente_sobre.model.Topic;
 import com.danielfariati.comente_sobre.repository.CommentRepository;
@@ -77,7 +77,7 @@ public class CommentBusinessTest {
 			assertEquals("error messages should be equals", expected.getMessage(), e.getErrors().get(0).getMessage());
 			assertEquals("error categories should be equals", expected.getCategory(), e.getErrors().get(0).getCategory());
 
-			verify(validator).onErrorForwardTo(CommentController.class);
+			verify(validator).onErrorForwardTo(TopicController.class);
 		}
 	}
 
@@ -101,7 +101,7 @@ public class CommentBusinessTest {
 			assertEquals("error messages should be equals", expected.getMessage(), e.getErrors().get(0).getMessage());
 			assertEquals("error categories should be equals", expected.getCategory(), e.getErrors().get(0).getCategory());
 
-			verify(validator).onErrorForwardTo(CommentController.class);
+			verify(validator).onErrorForwardTo(TopicController.class);
 		}
 	}
 
@@ -125,7 +125,7 @@ public class CommentBusinessTest {
 			assertEquals("error messages should be equals", expected.getMessage(), e.getErrors().get(0).getMessage());
 			assertEquals("error categories should be equals", expected.getCategory(), e.getErrors().get(0).getCategory());
 
-			verify(validator).onErrorForwardTo(CommentController.class);
+			verify(validator).onErrorForwardTo(TopicController.class);
 		}
 	}
 
@@ -149,7 +149,7 @@ public class CommentBusinessTest {
 			assertEquals("error messages should be equals", expected.getMessage(), e.getErrors().get(0).getMessage());
 			assertEquals("error categories should be equals", expected.getCategory(), e.getErrors().get(0).getCategory());
 
-			verify(validator).onErrorForwardTo(CommentController.class);
+			verify(validator).onErrorForwardTo(TopicController.class);
 		}
 	}
 
@@ -173,7 +173,7 @@ public class CommentBusinessTest {
 			assertEquals("error messages should be equals", expected.getMessage(), e.getErrors().get(0).getMessage());
 			assertEquals("error categories should be equals", expected.getCategory(), e.getErrors().get(0).getCategory());
 
-			verify(validator).onErrorForwardTo(CommentController.class);
+			verify(validator).onErrorForwardTo(TopicController.class);
 		}
 	}
 
@@ -194,7 +194,7 @@ public class CommentBusinessTest {
 			assertEquals("error messages should be equals", expected.getMessage(), e.getErrors().get(0).getMessage());
 			assertEquals("error categories should be equals", expected.getCategory(), e.getErrors().get(0).getCategory());
 
-			verify(validator).onErrorForwardTo(CommentController.class);
+			verify(validator).onErrorForwardTo(TopicController.class);
 		}
 	}
 
@@ -218,7 +218,7 @@ public class CommentBusinessTest {
 			assertEquals("error messages should be equals", expected.getMessage(), e.getErrors().get(0).getMessage());
 			assertEquals("error categories should be equals", expected.getCategory(), e.getErrors().get(0).getCategory());
 
-			verify(validator).onErrorForwardTo(CommentController.class);
+			verify(validator).onErrorForwardTo(TopicController.class);
 		}
 	}
 

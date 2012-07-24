@@ -35,19 +35,13 @@ public class CommentControllerTest {
 	}
 
 	@Test
-	public void shouldIncludeCommentInResult() {
-		Comment comment = Mockito.mock(Comment.class);
+	public void shouldCallMethodSave() {
 		Topic topic = Mockito.mock(Topic.class);
 
-		controller.add(comment, topic);
+		Comment comment = new Comment();
+		comment.setTopic(topic);
 
-		verify(topicRepository, times(1)).loadById(topic.getId());
-		verify(result).include("comment", comment);
-	}
-
-	@Test
-	public void shouldCallMethodSave() {
-		Comment comment = Mockito.mock(Comment.class);
+		Mockito.when(topicRepository.loadById(comment.getTopic().getId())).thenReturn(topic);
 
 		controller.save(comment);
 
@@ -56,7 +50,12 @@ public class CommentControllerTest {
 
 	@Test
 	public void shouldRedirectToTopicListAfterSave() {
-		Comment comment = Mockito.mock(Comment.class);
+		Topic topic = Mockito.mock(Topic.class);
+
+		Comment comment = new Comment();
+		comment.setTopic(topic);
+
+		Mockito.when(topicRepository.loadById(comment.getTopic().getId())).thenReturn(topic);
 
 		controller.save(comment);
 

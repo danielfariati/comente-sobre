@@ -10,7 +10,7 @@ import br.com.caelum.vraptor.ioc.Component;
 import br.com.caelum.vraptor.validator.ValidationMessage;
 
 import com.danielfariati.comente_sobre.business.common.GenericBusiness;
-import com.danielfariati.comente_sobre.controller.CommentController;
+import com.danielfariati.comente_sobre.controller.TopicController;
 import com.danielfariati.comente_sobre.model.Comment;
 import com.danielfariati.comente_sobre.model.Topic;
 import com.danielfariati.comente_sobre.repository.CommentRepository;
@@ -55,7 +55,7 @@ public class CommentBusiness extends GenericBusiness<Comment> implements Comment
 			validator.add(new ValidationMessage("O campo tópico deve ser preenchido!", "comment.topic.id"));
 		}
 
-		validator.onErrorForwardTo(CommentController.class).add(comment, comment.getTopic());
+		validator.onErrorForwardTo(TopicController.class).search(comment.getTopic(), comment);
 	}
 
 }
