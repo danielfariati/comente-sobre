@@ -8,7 +8,26 @@
 			<div id="comments">
 				<div id="comment-list-header">
 					Coment&aacute;rios
-					<input id="add-comment-btn" type="button" value="Adicionar novo" onclick="newComment();" class="btn"/>
+					<input id="add-comment-btn" type="button" value="Adicionar novo" onclick="newComment();" class="btn btn-small"/>
+				</div>
+
+				<div id="new-comment-wrapper">
+					<form id="form" action="${pageContext.request.contextPath}/comment" method="post">
+						<input type="hidden" name="comment.topic.id" value="${topic.id}"/>
+
+						<div id="new-comment">
+							<div id="email">
+								<label for="email-input">E-mail</label>
+								<input id="email-input" type="text" name="comment.email" value="${comment.email }"/>
+							</div>
+							<div id="message">
+								<label for="message-area">Mensagem</label>
+								<textarea id="message-area" name="comment.message" value="${comment.message}"></textarea>
+							</div>
+						</div>
+
+						<div id="submit"><input type="submit" value="Enviar" class="btn btn-primary"/></div>
+					</form>
 				</div>
 
 				<div id="comment-list">
@@ -39,11 +58,11 @@
 
 <script type="text/javascript">
 	function newComment() {
-		var url = '${pageContext.request.contextPath}/comment/${topic.id}';
-		$(location).attr('href', url);
+		$('#new-comment-wrapper').toggle();
 	};
 
 	$(function() {
+		$('#new-comment-wrapper').hide();
 		$('#add-comment-btn').focus();
 	});
 </script>
