@@ -1,16 +1,20 @@
 <dataset>
+    <user id="1" name="name-1" email="email-1@mail.com" password="A55FD88F7ED12EE2F0CD88A809243C42BD491FA571DFE6EFE245BA7E2D81C6D4" /> <!-- password-1 -->
+    <user id="2" name="name-2" email="email-2@mail.com" password="30416A9DC67C86393E51BF11EEB48003AD992AB5DAFB6369522648CDE0B7769E" /> <!-- password-2 -->
+    <user id="3" name="name-3" email="email-3@mail.com" password="DBB3C91AFB2B16563F647B68357290E8B5E645A9F04EB38202E20B13631BFCAD" /> <!-- password-3 -->
+
     <topic id="1" subject="subject-1" subjectURL="subjectURL-1" />
-		<comment id="1" email="email-1@mail.com" message="message-1" topic="1"/>
-		<comment id="2" email="email-2@mail.com" message="message-2" topic="1"/>
-		<comment id="3" email="email-3@mail.com" message="message-3" topic="1"/>
+		<comment id="1" message="message-1" topic="1" user="1" />
+		<comment id="2" message="message-2" topic="1" user="1" />
+		<comment id="3" message="message-3" topic="1" user="1" />
 
     <topic id="2" subject="subject-2" subjectURL="subjectURL-2" />
-    	<comment id="4" email="email-4@mail.com" message="message-4" topic="2"/>
-		<comment id="5" email="email-5@mail.com" message="message-5" topic="2"/>
-		<comment id="6" email="email-6@mail.com" message="message-6" topic="2"/>
+    	<comment id="4" message="message-4" topic="2" user="2" />
+		<comment id="5" message="message-5" topic="2" user="2" />
+		<comment id="6" message="message-6" topic="2" user="2" />
 
     <topic id="3" subject="subject-3" subjectURL="subjectURL-3" />
-    	<comment id="7" email="email-7@mail.com" message="message-7" topic="3"/>
-		<comment id="8" email="email-8@mail.com" message="message-8" topic="3"/>
-		<comment id="9" email="email-9@mail.com" message="message-9" topic="3"/>
+    	<comment id="7" message="message-7" topic="3" user="3" />
+		<comment id="8" message="message-8" topic="3" user="3" />
+		<comment id="9" message="message-9" topic="3" user="3" />
 </dataset>
