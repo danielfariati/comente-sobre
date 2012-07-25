@@ -11,7 +11,7 @@
 					<input id="add-comment-btn" type="button" value="Adicionar novo" onclick="newComment();" class="btn btn-small"/>
 				</div>
 
-				<div id="new-comment-wrapper">
+				<div id="new-comment-wrapper" class="well">
 					<form id="form" action="${pageContext.request.contextPath}/comment" method="post">
 						<input type="hidden" name="comment.topic.id" value="${topic.id}"/>
 

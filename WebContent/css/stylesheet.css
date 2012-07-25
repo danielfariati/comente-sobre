@@ -15,8 +15,13 @@ label {
 	font-size: 14px;
 }
 
+.center {
+	text-align: center;
+}
+
 .title {
 	font-weight: bold;
+	margin-bottom: 20px;
 }
 
 #comment-list-header {
@@ -37,12 +42,7 @@ label {
 }
 
 #new-comment-wrapper {
-	border: 1px black solid;
-	background-color: #F0F0F0;
-	display: block;
 	margin-top: 20px;
-	padding-top: 10px;
-	padding-left: 10px;
 }
 
 #message-area {
