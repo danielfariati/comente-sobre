@@ -26,6 +26,21 @@
 					<ul class="nav">
 						<li><a href="${pageContext.request.contextPath}/topic/list">T&oacute;picos</a></li>
 					</ul>
+
+					<ul class="nav float-right">
+						<li>
+							<div id="login-menu">
+								<c:choose>
+									<c:when test="${empty userSession.user}">
+										<a href="${pageContext.request.contextPath}/user/login">Login</a>
+									</c:when>
+									<c:otherwise>
+										Bem-vindo, ${userSession.user.name} | <a href="${pageContext.request.contextPath}/user/logout">Logout</a> 
+									</c:otherwise>
+								</c:choose>
+							</div>
+						</li>
+					</ul>
 				</div>
 			</div>
     	</div>

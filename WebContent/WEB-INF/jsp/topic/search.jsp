@@ -12,22 +12,31 @@
 				</div>
 
 				<div id="new-comment-wrapper" class="well">
-					<form id="form" action="${pageContext.request.contextPath}/comment" method="post">
-						<input type="hidden" name="comment.topic.id" value="${topic.id}"/>
+					<c:choose>
+						<c:when test="${empty userSession.user}">
+							<div class="alert alert-error">
+        						Voc&ecirc; precisa estar logado para realizar esta a&ccedil;&atilde;o!
+    						</div>
+						</c:when>
+						<c:otherwise>
+							<form id="form" action="${pageContext.request.contextPath}/comment" method="post">
+								<input type="hidden" name="comment.topic.id" value="${topic.id}"/>
 
-						<div id="new-comment">
-							<div id="email">
-								<label for="email-input">E-mail</label>
-								<input id="email-input" type="text" name="comment.email" value="${comment.email }"/>
-							</div>
-							<div id="message">
-								<label for="message-area">Mensagem</label>
-								<textarea id="message-area" name="comment.message" value="${comment.message}"></textarea>
-							</div>
-						</div>
-
-						<div id="submit"><input type="submit" value="Enviar" class="btn btn-primary"/></div>
-					</form>
+								<div id="new-comment">
+									<div id="email">
+										<label for="email-input">E-mail</label>
+										<input id="email-input" type="text" name="comment.email" value="${comment.email }"/>
+									</div>
+									<div id="message">
+										<label for="message-area">Mensagem</label>
+										<textarea id="message-area" name="comment.message" value="${comment.message}"></textarea>
+									</div>
+								</div>
+	
+								<div id="submit"><input type="submit" value="Enviar" class="btn btn-primary"/></div>
+							</form>
+						</c:otherwise>
+					</c:choose>
 				</div>
 
 				<div id="comment-list">

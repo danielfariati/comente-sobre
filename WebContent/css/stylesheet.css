@@ -19,9 +19,32 @@ label {
 	text-align: center;
 }
 
+.clear {
+    clear: both;
+}
+
+.float-left {
+    float: left !important;
+}
+
+.float-right {
+    float: right !important;
+}
+
 .title {
 	font-weight: bold;
 	margin-bottom: 20px;
+}
+
+#login-menu {
+	padding: 9px 10px 11px;	
+}
+
+#login-menu, #login-menu > a {
+	color: #999999;
+    line-height: 19px;
+    text-decoration: none;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
 }
 
 #comment-list-header {
