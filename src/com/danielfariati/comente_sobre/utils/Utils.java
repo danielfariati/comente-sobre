@@ -1,5 +1,8 @@
 package com.danielfariati.comente_sobre.utils;
 
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -18,7 +21,27 @@ public class Utils {
 		Pattern urlPattern = Pattern.compile(urlRegex);
 		Matcher matcher = urlPattern.matcher(url);
 
-	    return matcher.matches();
+		return matcher.matches();
 	}
 
+	public static String encrypt(String text) {
+		try {
+			MessageDigest algorithm = MessageDigest.getInstance("SHA-256");
+			byte messageDigest[] = algorithm.digest(text.getBytes("UTF-8"));
+
+			StringBuilder hexBuild = new StringBuilder();
+
+			for (byte b : messageDigest) {
+				hexBuild.append(String.format("%02X", 0xFF & b));
+			}
+
+			return hexBuild.toString();
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+
+		return text;
+	}
 }
