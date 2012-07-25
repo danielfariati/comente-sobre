@@ -26,7 +26,9 @@ import br.com.caelum.vraptor.validator.ValidationMessage;
 import com.danielfariati.comente_sobre.controller.TopicController;
 import com.danielfariati.comente_sobre.model.Comment;
 import com.danielfariati.comente_sobre.model.Topic;
+import com.danielfariati.comente_sobre.model.User;
 import com.danielfariati.comente_sobre.repository.CommentRepository;
+import com.danielfariati.comente_sobre.session.UserSession;
 
 public class CommentBusinessTest {
 
@@ -35,6 +37,8 @@ public class CommentBusinessTest {
 	private JSR303MockValidator validator;
 
 	private CommentRepository repository;
+
+	private UserSession userSession;
 
 	@BeforeClass
 	public static void beforeClass() {
@@ -47,8 +51,9 @@ public class CommentBusinessTest {
 
 		manager = JPAHelper.currentEntityManager();
 		validator = Mockito.spy(new JSR303MockValidator());
+		userSession = Mockito.spy(new UserSession());
 
-		repository = new CommentBusiness(manager, validator);
+		repository = new CommentBusiness(manager, validator, userSession);
 	}
 
 	@After
@@ -58,20 +63,21 @@ public class CommentBusinessTest {
 	}
 
 	@Test
-	public void shouldThrowExceptionIfEmailNull() {
+	public void shouldThrowExceptionIfUserNull() {
 		Topic topic = new Topic();
 		topic.setId(1l);
 
+		userSession.setUser(null);
+
 		Comment comment = new Comment();
-		comment.setEmail(null);
-		comment.setMessage("mensagem");
+		comment.setMessage("message");
 		comment.setTopic(topic);
 
 		try {
 			repository.save(comment);
 			fail("exception expected but not throwed");
 		} catch (ValidationException e) {
-			ValidationMessage expected = new ValidationMessage("O campo e-mail deve ser preenchido!", "comment.email");
+			ValidationMessage expected = new ValidationMessage("Você precisa estar logado para realizar esta ação!", "comment.user.id");
 
 			assertEquals("should have throw only 1 error", 1, e.getErrors().size());
 			assertEquals("error messages should be equals", expected.getMessage(), e.getErrors().get(0).getMessage());
@@ -82,20 +88,24 @@ public class CommentBusinessTest {
 	}
 
 	@Test
-	public void shouldThrowExceptionIfEmailEmpty() {
+	public void shouldThrowExceptionIfUserIdNull() {
 		Topic topic = new Topic();
 		topic.setId(1l);
 
+		User user = new User();
+		user.setId(null);
+
+		userSession.setUser(user);
+
 		Comment comment = new Comment();
-		comment.setEmail("");
-		comment.setMessage("mensagem");
+		comment.setMessage("message");
 		comment.setTopic(topic);
 
 		try {
 			repository.save(comment);
 			fail("exception expected but not throwed");
 		} catch (ValidationException e) {
-			ValidationMessage expected = new ValidationMessage("O campo e-mail deve ser preenchido!", "comment.email");
+			ValidationMessage expected = new ValidationMessage("Você precisa estar logado para realizar esta ação!", "comment.user.id");
 
 			assertEquals("should have throw only 1 error", 1, e.getErrors().size());
 			assertEquals("error messages should be equals", expected.getMessage(), e.getErrors().get(0).getMessage());
@@ -106,27 +116,25 @@ public class CommentBusinessTest {
 	}
 
 	@Test
-	public void shouldThrowExceptionIfEmailInvalid() {
+	public void shouldSetCommentUserToUserInTheSession() {
 		Topic topic = new Topic();
 		topic.setId(1l);
 
+		User expectedUser = new User();
+		expectedUser.setId(1l);
+
+		userSession.setUser(expectedUser);
+
 		Comment comment = new Comment();
-		comment.setEmail("mail");
-		comment.setMessage("mensagem");
+		comment.setMessage("message");
 		comment.setTopic(topic);
 
-		try {
-			repository.save(comment);
-			fail("exception expected but not throwed");
-		} catch (ValidationException e) {
-			ValidationMessage expected = new ValidationMessage("Por favor, informe um e-mail válido.", "comment.email");
+		comment = repository.save(comment);
 
-			assertEquals("should have throw only 1 error", 1, e.getErrors().size());
-			assertEquals("error messages should be equals", expected.getMessage(), e.getErrors().get(0).getMessage());
-			assertEquals("error categories should be equals", expected.getCategory(), e.getErrors().get(0).getCategory());
+		Comment actualComment = repository.loadById(comment.getId());
+		User actualUser = actualComment.getUser();
 
-			verify(validator).onErrorForwardTo(TopicController.class);
-		}
+		assertEquals(expectedUser.getId(), actualUser.getId());
 	}
 
 	@Test
@@ -134,8 +142,12 @@ public class CommentBusinessTest {
 		Topic topic = new Topic();
 		topic.setId(1l);
 
+		User user = new User();
+		user.setId(1l);
+
+		userSession.setUser(user);
+
 		Comment comment = new Comment();
-		comment.setEmail("email@email.com");
 		comment.setMessage(null);
 		comment.setTopic(topic);
 
@@ -158,8 +170,12 @@ public class CommentBusinessTest {
 		Topic topic = new Topic();
 		topic.setId(1l);
 
+		User user = new User();
+		user.setId(1l);
+
+		userSession.setUser(user);
+
 		Comment comment = new Comment();
-		comment.setEmail("email@email.com");
 		comment.setMessage("");
 		comment.setTopic(topic);
 
@@ -179,8 +195,12 @@ public class CommentBusinessTest {
 
 	@Test
 	public void shouldThrowExceptionIfTopicNull() {
+		User user = new User();
+		user.setId(1l);
+
+		userSession.setUser(user);
+
 		Comment comment = new Comment();
-		comment.setEmail("email@email.com");
 		comment.setMessage("message");
 		comment.setTopic(null);
 
@@ -200,11 +220,15 @@ public class CommentBusinessTest {
 
 	@Test
 	public void shouldThrowExceptionIfTopicIdNull() {
+		User user = new User();
+		user.setId(1l);
+
+		userSession.setUser(user);
+
 		Topic topic = new Topic();
 		topic.setId(null);
 
 		Comment comment = new Comment();
-		comment.setEmail("email@email.com");
 		comment.setMessage("message");
 		comment.setTopic(topic);
 
@@ -227,8 +251,12 @@ public class CommentBusinessTest {
 		Topic topic = new Topic();
 		topic.setId(1l);
 
+		User user = new User();
+		user.setId(1l);
+
+		userSession.setUser(user);
+
 		Comment expected = new Comment();
-		expected.setEmail("email@email.com");
 		expected.setMessage("message");
 		expected.setTopic(topic);
 
@@ -240,7 +268,6 @@ public class CommentBusinessTest {
 
 		assertNotNull(expected.getId());
 
-		assertEquals(expected.getEmail(), actual.getEmail());
 		assertEquals(expected.getMessage(), actual.getMessage());
 		assertEquals(topic.getId(), actual.getTopic().getId());
 		assertEquals(10, commentList.size());

@@ -6,7 +6,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
-import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import com.danielfariati.comente_sobre.model.common.GenericEntity;
@@ -15,12 +14,6 @@ import com.danielfariati.comente_sobre.model.common.GenericEntity;
 public class Comment extends GenericEntity {
 
 	private static final long serialVersionUID = -951123461336762520L;
-
-	@Email
-	@NotNull
-	@NotEmpty
-	@Column
-	private String email;
 
 	@NotNull
 	@NotEmpty
@@ -31,13 +24,9 @@ public class Comment extends GenericEntity {
 	@JoinColumn(name = "topic")
 	private Topic topic;
 
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
+	@ManyToOne
+	@JoinColumn(name = "user")
+	private User user;
 
 	public String getMessage() {
 		return message;
@@ -53,6 +42,14 @@ public class Comment extends GenericEntity {
 
 	public void setTopic(Topic topic) {
 		this.topic = topic;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 }

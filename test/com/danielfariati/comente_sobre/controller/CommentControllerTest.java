@@ -1,7 +1,11 @@
 package com.danielfariati.comente_sobre.controller;
 
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+
+import java.lang.reflect.Method;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -13,6 +17,7 @@ import org.mockito.Spy;
 import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.util.test.MockResult;
 
+import com.danielfariati.comente_sobre.annotation.MustBeLogged;
 import com.danielfariati.comente_sobre.model.Comment;
 import com.danielfariati.comente_sobre.model.Topic;
 import com.danielfariati.comente_sobre.repository.CommentRepository;
@@ -60,6 +65,17 @@ public class CommentControllerTest {
 		controller.save(comment);
 
 		verify(result).redirectTo(TopicController.class);
+	}
+
+	@Test
+	public void shouldHaveMustBeLoggedAnnotationInMethodSave() throws NoSuchMethodException, SecurityException {
+		Class<? extends CommentController> clazz = controller.getClass();
+		Method method = clazz.getMethod("save", Comment.class);
+
+		MustBeLogged annotation = method.getAnnotation(MustBeLogged.class);
+
+		assertNotNull(annotation);
+		assertTrue(method.isAnnotationPresent(MustBeLogged.class));		
 	}
 
 }

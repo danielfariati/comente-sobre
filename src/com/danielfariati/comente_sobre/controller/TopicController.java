@@ -8,6 +8,7 @@ import br.com.caelum.vraptor.Post;
 import br.com.caelum.vraptor.Resource;
 import br.com.caelum.vraptor.Result;
 
+import com.danielfariati.comente_sobre.annotation.MustBeLogged;
 import com.danielfariati.comente_sobre.model.Comment;
 import com.danielfariati.comente_sobre.model.Topic;
 import com.danielfariati.comente_sobre.repository.TopicRepository;
@@ -39,6 +40,7 @@ public class TopicController {
 		.include("topic", topic);
 	}
 
+	@MustBeLogged
 	@Get("/topic/new")
 	public void add(Topic topic) {
 		result
@@ -46,6 +48,7 @@ public class TopicController {
 		.include("prefixURL", Topic.prefixURL);
 	}
 
+	@MustBeLogged
 	@Post({"/topic", "/topic/new"})
 	public void save(Topic topic) {
 		topic = repository.save(topic);

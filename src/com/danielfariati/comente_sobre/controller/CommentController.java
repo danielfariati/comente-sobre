@@ -4,6 +4,7 @@ import br.com.caelum.vraptor.Post;
 import br.com.caelum.vraptor.Resource;
 import br.com.caelum.vraptor.Result;
 
+import com.danielfariati.comente_sobre.annotation.MustBeLogged;
 import com.danielfariati.comente_sobre.model.Comment;
 import com.danielfariati.comente_sobre.model.Topic;
 import com.danielfariati.comente_sobre.repository.CommentRepository;
@@ -22,6 +23,7 @@ public class CommentController {
 		this.topicRepository = topicRepository;
 	}
 
+	@MustBeLogged
 	@Post("/comment")
 	public void save(Comment comment) {
 		Topic topic = topicRepository.loadById(comment.getTopic().getId());

@@ -36,7 +36,7 @@ public class TopicBusiness extends GenericBusiness<Topic> implements TopicReposi
 	public Topic save(Topic topic) {
 		validateTopic(topic);
 
-		return manager.merge(topic);
+		return super.save(topic);
 	}
 
 	private void validateTopic(Topic topic) {
