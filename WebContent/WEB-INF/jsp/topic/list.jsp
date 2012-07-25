@@ -28,6 +28,6 @@
 
 <div id="add-topic">
 	<form action="${pageContext.request.contextPath}/topic/new" method="get">
-		<input type="button" value="Criar Novo T&oacute;pico" class="btn"></input>
+		<input type="submit" value="Criar Novo T&oacute;pico" class="btn"></input>
 	</form>
 </div>
