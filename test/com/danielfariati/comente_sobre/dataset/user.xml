@@ -1,0 +1,5 @@
+<dataset>
+    <user id="1" name="name-1" email="email-1@mail.com" password="A55FD88F7ED12EE2F0CD88A809243C42BD491FA571DFE6EFE245BA7E2D81C6D4" />
+    <user id="2" name="name-2" email="email-2@mail.com" password="30416A9DC67C86393E51BF11EEB48003AD992AB5DAFB6369522648CDE0B7769E" />
+    <user id="3" name="name-3" email="email-3@mail.com" password="DBB3C91AFB2B16563F647B68357290E8B5E645A9F04EB38202E20B13631BFCAD" />
+</dataset>
