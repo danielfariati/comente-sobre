@@ -25,7 +25,7 @@
 								<div id="new-comment">
 									<div id="email">
 										<label for="email-input">E-mail</label>
-										<input id="email-input" type="text" name="comment.email" value="${comment.email }"/>
+										<input id="email-input" type="text" name="comment.email" value="${userSession.user.email }" disabled="disabled"/>
 									</div>
 									<div id="message">
 										<label for="message-area">Mensagem</label>
@@ -45,15 +45,15 @@
 							Nenhum coment&aacute;rio encontrado!
 						</c:when>
 						<c:otherwise>
-							<c:forEach items="${topic.commentList}" var="item">
+							<c:forEach items="${topic.commentList}" var="comment">
 								<div class="comment-wrapper well">
 									<div class="email-wrapper">
 										<span class="title">E-mail</span>
-										<span class="email">${item.email}</span>
+										<span class="email">${comment.user.email}</span>
 									</div>
 									<div class="message-wrapper">
 										<span class="title">Message</span>
-										<span class="message">${item.message}</span>
+										<span class="message">${comment.message}</span>
 									</div>
 								</div>
 							</c:forEach>
