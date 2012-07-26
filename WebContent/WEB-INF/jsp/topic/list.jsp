@@ -6,9 +6,9 @@
 		<table class="table table-striped">
 			<thead>
 				<tr>
-					<td>Subject</td>
+					<td>Assunto</td>
 					<td>URL</td>
-					<td>Comments <i class="icon-comment"></i></td>
+					<td>Coment&aacute;rios <i class="icon-comment"></i></td>
 				</tr>
 			</thead>
 			<tbody>
