@@ -13,8 +13,6 @@ import java.util.Collection;
 
 import javax.persistence.EntityManager;
 
-import org.jstryker.database.DBUnitHelper;
-import org.jstryker.database.JPAHelper;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -32,6 +30,8 @@ import com.danielfariati.comente_sobre.model.User;
 import com.danielfariati.comente_sobre.repository.CommentRepository;
 import com.danielfariati.comente_sobre.repository.UserRepository;
 import com.danielfariati.comente_sobre.session.UserSession;
+import com.jintegrity.core.JIntegrity;
+import com.jintegrity.helper.JPAHelper;
 
 public class UserBusinessTest {
 
@@ -52,7 +52,7 @@ public class UserBusinessTest {
 
 	@Before
 	public void setup() throws SQLException {
-		new DBUnitHelper().cleanInsert("/dataset.xml");
+		new JIntegrity().cleanAndInsert();
 
 		manager = JPAHelper.currentEntityManager();
 		validator = Mockito.spy(new JSR303MockValidator());
@@ -65,7 +65,7 @@ public class UserBusinessTest {
 	@After
 	public void tearDown() {
 		JPAHelper.close();
-		new DBUnitHelper().deleteAll("/dataset.xml");
+		new JIntegrity().clean();
 	}
 
 	@Test

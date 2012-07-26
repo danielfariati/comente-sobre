@@ -11,8 +11,6 @@ import java.util.Collection;
 
 import javax.persistence.EntityManager;
 
-import org.jstryker.database.DBUnitHelper;
-import org.jstryker.database.JPAHelper;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -29,6 +27,8 @@ import com.danielfariati.comente_sobre.model.Topic;
 import com.danielfariati.comente_sobre.model.User;
 import com.danielfariati.comente_sobre.repository.CommentRepository;
 import com.danielfariati.comente_sobre.session.UserSession;
+import com.jintegrity.core.JIntegrity;
+import com.jintegrity.helper.JPAHelper;
 
 public class CommentBusinessTest {
 
@@ -47,7 +47,7 @@ public class CommentBusinessTest {
 
 	@Before
 	public void setup() throws SQLException {
-		new DBUnitHelper().cleanInsert("/dataset.xml");
+		new JIntegrity().cleanAndInsert();
 
 		manager = JPAHelper.currentEntityManager();
 		validator = Mockito.spy(new JSR303MockValidator());
@@ -59,7 +59,7 @@ public class CommentBusinessTest {
 	@After
 	public void tearDown() {
 		JPAHelper.close();
-		new DBUnitHelper().deleteAll("/dataset.xml");
+		new JIntegrity().clean();
 	}
 
 	@Test
@@ -250,9 +250,14 @@ public class CommentBusinessTest {
 	public void shouldMergeIfNoValidationErrors() {
 		Topic topic = new Topic();
 		topic.setId(1l);
+		topic.setSubject("subject-1");
+		topic.setSubjectURL("subjectURL-1");
 
 		User user = new User();
 		user.setId(1l);
+		user.setName("name-1");
+		user.setEmail("email-1@mail.com");
+		user.setPassword("password-1");
 
 		userSession.setUser(user);
 
