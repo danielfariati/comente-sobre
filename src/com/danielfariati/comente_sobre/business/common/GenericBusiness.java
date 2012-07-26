@@ -32,7 +32,7 @@ public class GenericBusiness<T extends GenericEntity> implements GenericReposito
 		Query query = manager.createQuery("from " + clazz.getName());
 
 		@SuppressWarnings("unchecked")
-		Collection<T> resultList = query.getResultList();
+		Collection<T> resultList = (Collection<T>) query.getResultList();
 
 		return resultList;
 	}

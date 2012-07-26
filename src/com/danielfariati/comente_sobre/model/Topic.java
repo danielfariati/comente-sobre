@@ -8,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 import com.danielfariati.comente_sobre.model.common.GenericEntity;
 
 @Entity
@@ -18,10 +20,12 @@ public class Topic extends GenericEntity {
 	public static final String prefixURL = "http://www.comentesobre.com";
 
 	@NotNull
+	@NotEmpty
 	@Column(unique = true)
 	private String subject;
 
 	@NotNull
+	@NotEmpty
 	@Column(unique = true)
 	private String subjectURL;
 

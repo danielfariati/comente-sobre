@@ -25,7 +25,7 @@ public class Comment extends GenericEntity {
 	private Topic topic;
 
 	@ManyToOne
-	@JoinColumn(name = "user")
+	@JoinColumn(name = "commenter")
 	private User user;
 
 	public String getMessage() {

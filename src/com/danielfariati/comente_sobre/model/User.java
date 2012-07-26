@@ -21,6 +21,7 @@ public class User extends GenericEntity {
 
 	@NotNull
 	@NotEmpty
+	@Column
 	private String name;
 
 	@Email
@@ -31,6 +32,7 @@ public class User extends GenericEntity {
 
 	@NotNull
 	@NotEmpty
+	@Column
 	private String password;
 
 	@OneToMany(mappedBy="user", cascade=CascadeType.ALL)
