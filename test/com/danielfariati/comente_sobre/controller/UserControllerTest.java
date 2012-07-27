@@ -15,6 +15,7 @@ import br.com.caelum.vraptor.util.test.MockResult;
 
 import com.danielfariati.comente_sobre.model.User;
 import com.danielfariati.comente_sobre.repository.UserRepository;
+import com.danielfariati.comente_sobre.session.UserSession;
 
 public class UserControllerTest {
 
@@ -24,10 +25,12 @@ public class UserControllerTest {
 
 	@Mock private UserRepository repository;
 
+	@Mock private UserSession session;
+
 	@Before
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
-		controller = new UserController(result, repository);
+		controller = new UserController(result, repository, session);
 	}
 
 	@Test

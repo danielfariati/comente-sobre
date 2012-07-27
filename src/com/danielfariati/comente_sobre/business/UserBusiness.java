@@ -30,8 +30,6 @@ public class UserBusiness extends GenericBusiness<User> implements UserRepositor
 	public User save(User user) {
 		validateUser(user);
 
-		session.setUser(user);
-
 		return super.save(user);
 	}
 
