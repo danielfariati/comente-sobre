@@ -47,7 +47,7 @@
 
 		<div id="content" class="container">
 			<c:if test="${!empty errors}">
-				<div class="alert alert-error">
+				<div id="error-wrapper" class="alert alert-error">
 					<a class="close" data-dismiss="alert" href="#">×</a>
 					<c:forEach var="error" items="${errors}">
 						<div>${error.message}</div>
