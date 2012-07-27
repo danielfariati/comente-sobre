@@ -1,5 +1,7 @@
 package com.danielfariati.comente_sobre.controller;
 
+import static br.com.caelum.vraptor.view.Results.http;
+import br.com.caelum.vraptor.Delete;
 import br.com.caelum.vraptor.Post;
 import br.com.caelum.vraptor.Resource;
 import br.com.caelum.vraptor.Result;
@@ -32,6 +34,14 @@ public class CommentController {
 		repository.save(comment);
 
 		result.redirectTo(TopicController.class).search(comment.getTopic(), null);
+	}
+
+	@MustBeLogged
+	@Delete("/comment/{comment.id}")
+	public void remove(Comment comment) {
+		repository.remove(comment);
+
+		result.use(http()).setStatusCode(200);
 	}
 
 }

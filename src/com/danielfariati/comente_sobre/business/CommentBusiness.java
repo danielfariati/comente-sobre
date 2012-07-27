@@ -1,5 +1,7 @@
 package com.danielfariati.comente_sobre.business;
 
+import static br.com.caelum.vraptor.view.Results.http;
+
 import java.util.Collection;
 
 import javax.persistence.EntityManager;
@@ -9,7 +11,6 @@ import br.com.caelum.vraptor.Validator;
 import br.com.caelum.vraptor.ioc.Component;
 import br.com.caelum.vraptor.validator.ValidationMessage;
 
-import com.danielfariati.comente_sobre.annotation.MustBeLogged;
 import com.danielfariati.comente_sobre.business.common.GenericBusiness;
 import com.danielfariati.comente_sobre.controller.TopicController;
 import com.danielfariati.comente_sobre.model.Comment;
@@ -29,13 +30,25 @@ public class CommentBusiness extends GenericBusiness<Comment> implements Comment
 	}
 
 	@Override
-	@MustBeLogged
 	public Comment save(Comment comment) {
 		comment.setUser(userSession.getUser());
 
 		validateComment(comment);
 
 		return super.save(comment);
+	}
+
+	@Override
+	public void remove(Comment comment) {
+		comment = loadById(comment.getId());
+
+		if (comment.getUser().getId().intValue() == userSession.getUser().getId().intValue()) {
+			super.remove(comment);
+		} else {
+			validator.add(new ValidationMessage("Este comentário não é seu!", "comment.user"));
+		}
+
+		validator.onErrorUse(http()).sendError(403);
 	}
 
 	public Collection<Comment> loadByTopic(Topic topic) {

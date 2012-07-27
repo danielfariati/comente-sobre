@@ -47,6 +47,11 @@
 						<c:otherwise>
 							<c:forEach items="${topic.commentList}" var="comment">
 								<div class="comment-wrapper well">
+									<c:if test="${userSession.user.id == comment.user.id}">
+										<div class="delete-comment-wrapper float-right">
+											<i class="icon-remove" onclick="removeComment(${comment.id}, this);"></i>
+										</div>
+									</c:if>
 									<div class="email-wrapper">
 										<span class="title">E-mail</span>
 										<span class="email">${comment.user.email}</span>
@@ -66,6 +71,19 @@
 </c:choose>
 
 <script type="text/javascript">
+	function removeComment(id, btn) {
+		$.ajax({
+		    url: '${pageContext.request.contextPath}/comment/' + id,
+		    type: 'DELETE',
+		}).done(function() {
+			$(btn).parent('div').parent('div').remove();
+		}).fail(function(xhr) {
+			if (xhr.status == 403) {
+				showError('Voc&ecirc; n&atilde;o tem permiss&atilde;o para realizar esta a&ccedil;&atilde;o');
+			}
+		});
+	};
+
 	function newComment() {
 		$('#new-comment-wrapper').toggle();
 	};
