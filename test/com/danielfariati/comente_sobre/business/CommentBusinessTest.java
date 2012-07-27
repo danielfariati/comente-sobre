@@ -300,6 +300,11 @@ public class CommentBusinessTest {
 
 	@Test
 	public void shouldRemoveCommentByReferenceId() {
+		User user = new User();
+		user.setId(1l);
+
+		userSession.setUser(user);
+
 		Comment actual = new Comment();
 		actual.setId(1l);
 
@@ -308,6 +313,25 @@ public class CommentBusinessTest {
 		Comment expected = repository.loadById(1l);
 
 		assertNull("should not have comment with id 1", expected);
+	}
+
+	@Test
+	public void shouldNotRemoveCommentByReferenceIdWhenNotTheCommenter() {
+		User user = new User();
+		user.setId(2l);
+
+		userSession.setUser(user);
+
+		Comment actual = new Comment();
+		actual.setId(1l);
+
+		try {
+			repository.remove(actual);
+			fail("exception expected but not throwed");
+		} catch (ValidationException e) {
+			Comment expected = repository.loadById(1l);
+			assertNotNull("should have comment with id 1", expected);
+		}
 	}
 
 }
