@@ -11,8 +11,8 @@
 		</div>
 	</div>
 	<div id="buttons">
-		<input type="submit" value="Criar" class="btn btn-primary" />
-		<input type="button" value="Cancelar" onclick="cancel();" class="btn" />
+		<input id="create" type="submit" value="Criar" class="btn btn-primary" />
+		<input id="cancel" type="button" value="Cancelar" onclick="cancel();" class="btn" />
 	</div>
 </form>
 

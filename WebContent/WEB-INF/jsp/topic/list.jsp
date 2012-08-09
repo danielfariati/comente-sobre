@@ -27,7 +27,7 @@
 </c:choose>
 
 <div id="add-topic">
-	<form action="${pageContext.request.contextPath}/topic/new" method="get">
-		<input type="submit" value="Criar Novo T&oacute;pico" class="btn"></input>
+	<form name="add-form" action="${pageContext.request.contextPath}/topic/new" method="get">
+		<input id="submit" type="submit" value="Criar Novo T&oacute;pico" class="btn"></input>
 	</form>
 </div>
