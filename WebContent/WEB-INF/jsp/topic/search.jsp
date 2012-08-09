@@ -12,6 +12,10 @@
 				</div>
 
 				<div id="new-comment-wrapper" class="well">
+					<div id="char-count">
+						Caracteres restantes: <span id="char-left"></span>
+					</div>
+
 					<form id="form" action="${pageContext.request.contextPath}/comment" method="post">
 						<input type="hidden" name="comment.topic.id" value="${topic.id}"/>
 
@@ -26,7 +30,7 @@
 							</div>
 						</div>
 
-						<div id="submit"><input type="submit" value="Enviar" class="btn btn-primary"/></div>
+						<div><input id="submit" type="submit" value="Enviar" class="btn btn-primary"/></div>
 					</form>
 				</div>
 
@@ -39,11 +43,11 @@
 							<c:forEach items="${topic.commentList}" var="item">
 								<div class="comment-wrapper well">
 									<div class="email-wrapper">
-										<span class="title">E-mail</span>
+										<span class="title">E-mail:</span>
 										<span class="email">${item.email}</span>
 									</div>
 									<div class="message-wrapper">
-										<span class="title">Message</span>
+										<span class="title">Message:</span>
 										<span class="message">${item.message}</span>
 									</div>
 								</div>
@@ -61,10 +65,35 @@
 		$('#new-comment-wrapper').toggle();
 	};
 
+	function updateCharCount() {
+		var maxCharCount = '${messageSize}',
+			message = $('#message-area').val();
+			actualCharCount = message.length,
+			leftCharCount = maxCharCount - actualCharCount;
+
+		if (leftCharCount <= 10) {
+			$('#char-left').css('color', 'red');
+		} else {
+			$('#char-left').css('color', 'black');
+		}
+
+		if (message.trim().length == 0 || leftCharCount <= 10) {
+			$('#submit').attr('disabled', 'disabled').removeClass('btn-primary');
+		} else {
+			$('#submit').removeAttr('disabled').addClass('btn-primary');
+		}
+
+		$('#char-left').html(leftCharCount);
+	};
+
 	$(function() {
 		if (!'${errors}') {
 			$('#new-comment-wrapper').hide();
 		}
+
+		updateCharCount();
+
+		$('#message-area').bind('keydown keypress keyup', updateCharCount);
 
 		$('#add-comment-btn').focus();
 	});

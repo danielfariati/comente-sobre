@@ -23,7 +23,7 @@ public class TopicController {
 		this.repository = repository;
 	}
 
-	@Get("/topic/list")
+	@Get({"/", "/topic/list"})
 	public void list() {
 		Collection<Topic> topicList = repository.loadAll();
 
@@ -36,7 +36,8 @@ public class TopicController {
 
 		result
 		.include("comment", comment)
-		.include("topic", topic);
+		.include("topic", topic)
+		.include("messageSize", Comment.MESSAGE_MAX_SIZE);
 	}
 
 	@Get("/topic/new")
