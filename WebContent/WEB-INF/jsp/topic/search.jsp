@@ -18,11 +18,11 @@
 						<div id="new-comment">
 							<div id="email">
 								<label for="email-input">E-mail</label>
-								<input id="email-input" type="text" name="comment.email" value="${comment.email }"/>
+								<input id="email-input" type="text" name="comment.email" value="${comment.email}"/>
 							</div>
 							<div id="message">
 								<label for="message-area">Mensagem</label>
-								<textarea id="message-area" name="comment.message" value="${comment.message}"></textarea>
+								<textarea id="message-area" name="comment.message">${comment.message}</textarea>
 							</div>
 						</div>
 

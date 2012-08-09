@@ -2,12 +2,12 @@
 	<div id = "inputs">
 		<div id="subject" class="input-wrapper">
 			<label for="subject-input">Assunto</label>
-			<input id="subject-input" type="text" name="topic.subject"></input>
+			<input id="subject-input" type="text" name="topic.subject" value="${topic.subject}"></input>
 		</div>
 		<div id="subject-url" class="input-wrapper">
 			<label for="subject-url-input">URL</label>
 			<span id="url-prefix">${prefixURL}/</span>
-			<input id="subject-url-input" type="text" name="topic.subjectURL"></input>
+			<input id="subject-url-input" type="text" name="topic.subjectURL" value="${topic.subjectURL}"></input>
 		</div>
 	</div>
 	<div id="buttons">
