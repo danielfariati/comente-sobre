@@ -27,6 +27,8 @@ public class CommentBusiness extends GenericBusiness<Comment> implements Comment
 	public Comment save(Comment comment) {
 		validateComment(comment);
 
+		comment.setMessage(replaceSeparator(comment));
+
 		return manager.merge(comment);
 	}
 
@@ -47,8 +49,10 @@ public class CommentBusiness extends GenericBusiness<Comment> implements Comment
 			validator.add(new ValidationMessage("Por favor, informe um e-mail válido.", "comment.email"));
 		}
 
-		if (comment.getMessage() == null || comment.getMessage().isEmpty()) {
+		if (comment.getMessage() == null || comment.getMessage().trim().isEmpty()) {
 			validator.add(new ValidationMessage("O campo mensagem deve ser preenchido!", "comment.message"));
+		} else if (comment.getMessage().length() > Comment.MESSAGE_MAX_SIZE) {
+			validator.add(new ValidationMessage("A mensagem informada excedeu o limite de caracteres permitido!", "comment.message"));
 		}
 
 		if (comment.getTopic() == null || comment.getTopic().getId() == null) {
@@ -56,6 +60,12 @@ public class CommentBusiness extends GenericBusiness<Comment> implements Comment
 		}
 
 		validator.onErrorForwardTo(TopicController.class).search(comment.getTopic(), comment);
+	}
+
+	private String replaceSeparator(Comment comment) {
+		String separator = System.getProperty("line.separator");
+
+		return comment.getMessage().replace(separator, "<br/>");
 	}
 
 }

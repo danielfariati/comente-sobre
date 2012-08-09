@@ -16,6 +16,8 @@ public class Comment extends GenericEntity {
 
 	private static final long serialVersionUID = -951123461336762520L;
 
+	public static final int MESSAGE_MAX_SIZE = 2000;
+
 	@Email
 	@NotNull
 	@NotEmpty
@@ -24,7 +26,7 @@ public class Comment extends GenericEntity {
 
 	@NotNull
 	@NotEmpty
-	@Column
+	@Column(length = MESSAGE_MAX_SIZE)
 	private String message;
 
 	@ManyToOne

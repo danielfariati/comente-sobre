@@ -178,6 +178,56 @@ public class CommentBusinessTest {
 	}
 
 	@Test
+	public void shouldThrowExceptionIfMessageHaveOnlyBlankLines() {
+		Topic topic = new Topic();
+		topic.setId(1l);
+
+		Comment comment = new Comment();
+		comment.setEmail("email@email.com");
+		comment.setMessage("\n\n\r\n");
+		comment.setTopic(topic);
+
+		try {
+			repository.save(comment);
+			fail("exception expected but not throwed");
+		} catch (ValidationException e) {
+			ValidationMessage expected = new ValidationMessage("O campo mensagem deve ser preenchido!", "comment.message");
+
+			assertEquals("should have throw only 1 error", 1, e.getErrors().size());
+			assertEquals("error messages should be equals", expected.getMessage(), e.getErrors().get(0).getMessage());
+			assertEquals("error categories should be equals", expected.getCategory(), e.getErrors().get(0).getCategory());
+
+			verify(validator).onErrorForwardTo(TopicController.class);
+		}
+	}
+
+	@Test
+	public void shouldThrowExceptionIfMessageExceedsMaximumPermittedSize() {
+		Topic topic = new Topic();
+		topic.setId(1l);
+
+		String message = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
+
+		Comment comment = new Comment();
+		comment.setEmail("email@email.com");
+		comment.setMessage(message);
+		comment.setTopic(topic);
+
+		try {
+			repository.save(comment);
+			fail("exception expected but not throwed");
+		} catch (ValidationException e) {
+			ValidationMessage expected = new ValidationMessage("A mensagem informada excedeu o limite de caracteres permitido!", "comment.message");
+
+			assertEquals("should have throw only 1 error", 1, e.getErrors().size());
+			assertEquals("error messages should be equals", expected.getMessage(), e.getErrors().get(0).getMessage());
+			assertEquals("error categories should be equals", expected.getCategory(), e.getErrors().get(0).getCategory());
+
+			verify(validator).onErrorForwardTo(TopicController.class);
+		}
+	}
+
+	@Test
 	public void shouldThrowExceptionIfTopicNull() {
 		Comment comment = new Comment();
 		comment.setEmail("email@email.com");
