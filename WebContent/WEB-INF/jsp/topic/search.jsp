@@ -77,13 +77,18 @@
 			$('#char-left').css('color', 'black');
 		}
 
-		if (message.trim().length == 0 || leftCharCount <= 10) {
+		$('#char-left').html(leftCharCount);
+	};
+
+	function checkRequiredFields() {
+		var message = $('#message-area').val(),
+			email = $('#email-input').val();
+
+		if (message.trim().length == 0 || email.trim().length == 0) {
 			$('#submit').attr('disabled', 'disabled').removeClass('btn-primary');
 		} else {
 			$('#submit').removeAttr('disabled').addClass('btn-primary');
 		}
-
-		$('#char-left').html(leftCharCount);
 	};
 
 	$(function() {
@@ -92,8 +97,14 @@
 		}
 
 		updateCharCount();
+		checkRequiredFields();
 
-		$('#message-area').bind('keydown keypress keyup', updateCharCount);
+		$('#message-area').bind('keydown keypress keyup', function() {
+			updateCharCount();
+			checkRequiredFields();
+		});
+
+		$('#email-input').bind('keydown keypress keyup', checkRequiredFields);
 
 		$('#add-comment-btn').focus();
 	});
