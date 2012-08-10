@@ -29,7 +29,7 @@ public class CommentBusiness extends GenericBusiness<Comment> implements Comment
 
 		comment.setMessage(replaceSeparator(comment));
 
-		return manager.merge(comment);
+		return super.save(comment);
 	}
 
 	public Collection<Comment> loadByTopic(Topic topic) {
