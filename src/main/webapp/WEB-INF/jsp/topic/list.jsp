@@ -14,10 +14,10 @@
 			<tbody>
 				<c:forEach items="${topicList}" var="topic">
 					<tr>
-						<td>${topic.subject}</td>
-						<td>${topic.subjectURL}</td>
-						<td>
-							<a href="${pageContext.request.contextPath}/${topic.subjectURL}">Ver</a>
+						<td class="subject">${topic.subject}</td>
+						<td class="url">${topic.subjectURL}</td>
+						<td class="link">
+							<a class="link-inner" href="${pageContext.request.contextPath}/${topic.subjectURL}">Ver</a>
 						</td>
 					</tr>
 				</c:forEach>
