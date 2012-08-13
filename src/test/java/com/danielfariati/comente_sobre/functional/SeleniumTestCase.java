@@ -212,8 +212,7 @@ public class SeleniumTestCase {
 		assertTrue(selenium.isTextPresent("message"));
 	}
 
-	@Test
-	public void testTopicListAfterSavingTopic() {
+	private void testTopicListAfterSavingTopic() {
 		selenium.open(BASE_URL);
 		selenium.waitForPageToLoad("2000");
 
