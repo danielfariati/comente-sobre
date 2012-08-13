@@ -84,7 +84,7 @@
 		var message = $('#message-area').val(),
 			email = $('#email-input').val();
 
-		if (message.trim().length == 0 || email.trim().length == 0) {
+		if (message.trim().length == 0 || message.trim().length > '${messageSize}' || email.trim().length == 0) {
 			$('#submit').attr('disabled', 'disabled').removeClass('btn-primary');
 		} else {
 			$('#submit').removeAttr('disabled').addClass('btn-primary');
