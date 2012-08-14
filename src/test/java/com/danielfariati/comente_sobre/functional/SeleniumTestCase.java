@@ -27,7 +27,7 @@ public class SeleniumTestCase {
     }
 
 	@AfterClass
-	public static void tearDownClass() {
+	public static void tearDownClass() throws Exception {
         SeleniumHelper.stopSeleniumServer(selenium);
     }
 

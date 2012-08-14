@@ -25,15 +25,9 @@ public class SeleniumHelper {
 		server.start();
 	}
 
-	public static void stopSeleniumServer(Selenium selenium) {
+	public static void stopSeleniumServer(Selenium selenium) throws Exception {
 		selenium.stop();
-
-		if (server != null) {
-			selenium.shutDownSeleniumServer();
-			server.stop();
-
-			server = null;
-		}
+		server.stop();
 	}
 
 }
