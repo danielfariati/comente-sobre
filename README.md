@@ -4,5 +4,5 @@ comente-sobre
 Projeto feito para o Desafio Técnico Bluesoft.
 
 Para compilar, baixe o código e digite "mvn clean install" na pasta do mesmo, pelo console.
-É necessário o Tomcat 7 para a realização dos testes funcionais (Selenium)
 
+É necessário o Tomcat 7 para a realização dos testes funcionais (Selenium) e a porta 8080 deve estar disponível para utilização.
